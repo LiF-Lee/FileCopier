@@ -8,6 +8,6 @@
 # 📜사용 방법
 - `FileCopier.bat` 실행 후 단계에 따르세요.
 
-<img src="https://github.com/LiF-Lee/FileCopier/assets/66173558/66fd4fbb-8c0e-4a5e-9c09-a80908931068" width="800">
+<img src="https://github.com/LiF-Lee/FileCopier/assets/66173558/02d24434-55b4-4a20-9313-061fab579d05" width="800">
 
-<img src="https://github.com/LiF-Lee/FileCopier/assets/66173558/2c843eea-6d21-4b9a-8686-a81b1d0844c2" width="800">
+<img src="https://github.com/LiF-Lee/FileCopier/assets/66173558/d007e48d-efa0-41db-b318-9d681ca33c48" width="800">
