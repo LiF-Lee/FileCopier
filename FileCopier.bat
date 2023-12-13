@@ -59,7 +59,7 @@ set /p "fileNamePattern=File Name Pattern: "
 echo.
 echo [INFO] Do you want to copy without folder? (Y/N)
 set "withoutFolder="
-set /p withoutFolder=
+set /p "withoutFolder=Answer: "
 if /i "%withoutFolder%"=="Y" goto copyFilesWithoutFolder
 if /i "%withoutFolder%"=="y" goto copyFilesWithoutFolder
 if /i "%withoutFolder%"=="N" goto copyFilesWithFolder
@@ -79,13 +79,17 @@ setlocal enabledelayedexpansion
 if "%fileNamePattern%"=="" (
     for /r "%src%" %%f in (*) do (
         set "relPath=%%~dpf"
-        robocopy "!relPath:~0,-1!" "%dest%\%newFolderName%" "*.*" /NDL /NJH /NJS
+        set "relPath=!relPath:%src%=!"
+        echo Copying file: !relPath!%%~nxf
+        xcopy "%%f" "%dest%\%newFolderName%\" /Q /Y /I
         set /a fileCount+=1
     )
 ) else (
     for /r "%src%" %%f in (%fileNamePattern%) do (
         set "relPath=%%~dpf"
-        robocopy "!relPath:~0,-1!" "%dest%\%newFolderName%" "%%~nxf" /NDL /NJH /NJS
+        set "relPath=!relPath:%src%=!"
+        echo Copying file: !relPath!%%~nxf
+        xcopy "%%f" "%dest%\%newFolderName%\" /Q /Y /I
         set /a fileCount+=1
     )
 )
