@@ -66,7 +66,16 @@ if not defined fileExtensions (
 endlocal & set /a fileCount=%fileCount%
 
 set endTime=%time%
-set /a hours=1%endTime:~0,2%-1%startTime:~0,2%
+
+set startHr=%startTime:~0,1%
+set endHr=%endTime:~0,1%
+
+REM 첫 번째 문자가 0인지 확인 (즉, 시간이 10시간 미만인지 확인)
+if "%startHr%"=="0" (set /a startHour=%startTime:~1,1%) else (set /a startHour=%startTime:~0,2%)
+if "%endHr%"=="0" (set /a endHour=%endTime:~1,1%) else (set /a endHour=%endTime:~0,2%)
+
+REM 나머지 계산은 동일
+set /a hours=%endHour%-%startHour%
 set /a mins=1%endTime:~3,2%-1%startTime:~3,2%
 set /a secs=1%endTime:~6,2%-1%startTime:~6,2%
 if %secs% lss 0 set /a secs+=60 & set /a mins-=1
