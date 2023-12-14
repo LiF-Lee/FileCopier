@@ -22,6 +22,7 @@ if "%src%" == "" (
 )
 if not exist "%src%\" (
     echo [ERROR] Path not found. Please enter a valid path.
+    set "src="
     goto inputSrc
 )
 
@@ -39,6 +40,7 @@ if "%dest%"=="" (
 set /p "dest=Path: "
 if not exist "%dest%\" (
     echo [ERROR] Path not found. Please enter a valid path.
+    set "dest="
     goto inputDest
 )
 
@@ -53,6 +55,19 @@ echo [INFO] Leave blank to copy all files
 set "fileNamePattern="
 set /p "fileNamePattern=File Name Pattern: "
 
+:inputCopyType
+echo.
+echo [INFO] Do you want to copy without folder? (Y/N)
+set "withoutFolder="
+set /p "withoutFolder=Answer: "
+if /i "%withoutFolder%"=="Y" goto copyFilesWithoutFolder
+if /i "%withoutFolder%"=="y" goto copyFilesWithoutFolder
+if /i "%withoutFolder%"=="N" goto copyFilesWithFolder
+if /i "%withoutFolder%"=="n" goto copyFilesWithFolder
+echo [ERROR] Please enter a valid input.
+goto inputCopyType
+
+:copyFilesWithoutFolder
 echo.
 echo [INFO] Starting the file copy process. Please wait...
 echo.
@@ -99,6 +114,24 @@ echo [INFO] File copying is complete!
 echo [INFO] Total files copied: %fileCount%
 echo [INFO] Time taken: %hours% hours %mins% minutes %secs% seconds
 
+goto end
+
+:copyFilesWithFolder
+echo.
+echo [INFO] Starting the file copy process. Please wait...
+echo.
+
+setlocal enabledelayedexpansion
+if "%fileNamePattern%"=="" (
+    robocopy "%src%" "%dest%\%newFolderName%" "*.*" /NDL /NJH /S
+) else (
+    robocopy "%src%" "%dest%\%newFolderName%" "%fileNamePattern%" /NDL /NJH /S
+)
+endlocal
+
+goto end
+
+:end
 echo.
 echo [INFO] Do you want to copy more files? (Y/N)
 set /p restart=
